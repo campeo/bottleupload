@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 from bottle import Bottle, request, response
-from io import BytesIO
 from mypkg import analyse_data
 
 
@@ -36,6 +35,7 @@ def upload():
     # Your analyse_data function takes a file-like object and returns a new
     # file-like object ready for reading.
     converted_file = analyse_data(data=upload_file.file, level=level)
+    response.set_header('Content-Type', 'text/csv')
     response.set_header('Content-Disposition', 'attachment; filename=converted.csv')
     
     # Return a file-like object.
